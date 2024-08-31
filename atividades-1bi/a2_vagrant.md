@@ -9,7 +9,7 @@
 `vagrant init generic/alpine318` 
 
 - Configurar a porta  descomentando a linha: 
-`config.vm.network "forwarded_port", guest: 8000, host: 8080`
+`config.vm.network "forwarded_port", guest: 8000, host: 5000`
 
 - Iniciar vagrant
 `vagrant up`
@@ -30,6 +30,7 @@
 `cd teste`
 `python manage.py run_server 0.0.0.0:8000`
 
+- Acessar localhost:8000 no navegador do host
 
 ## Plus
 
