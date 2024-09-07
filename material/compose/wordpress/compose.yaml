@@ -1,0 +1,5 @@
+services:
+  meubloguinho:
+    image: wordpress:latest
+    ports:
+      - 8080:80
