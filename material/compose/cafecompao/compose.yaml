@@ -1,6 +1,23 @@
+volumes:
+  db_data: {}
+
 services:
   meucafezinho:
     build: .
     ports:
       - 8000:8000
     command: /bin/sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - meubanquinho 
+  meubanquinho:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin 
+      POSTGRES_PASSWORD: senha 
+      POSTGRES_DB: cafecompaobd 
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
