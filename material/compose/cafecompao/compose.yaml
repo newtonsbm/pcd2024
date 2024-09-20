@@ -1,5 +1,5 @@
 volumes:
-  db_data: {}
+  db_data: {b    }
 
 services:
   meucafezinho:
