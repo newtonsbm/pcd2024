@@ -21,8 +21,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from padarias.api import views
 
 router = SimpleRouter()
-router.register(r'padarias', views.PadariaViewSet)
 router.register(r'cestas', views.CestaViewSet)
+router.register(r'produtos', views.ProdutoViewSet)
 
 
 urlpatterns = [

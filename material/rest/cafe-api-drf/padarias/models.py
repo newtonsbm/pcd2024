@@ -15,12 +15,13 @@ class Padaria(models.Model):
         verbose_name="Nome", max_length=100, unique=True, null=False, blank=False, help_text="Nome da padaria")
     descricao = models.TextField(
         verbose_name="Descrição", null=True, blank=True, help_text="Descrição da padaria")
-    cestas = models.ManyToManyField(
-        'Cesta', verbose_name="Cestas", help_text="Cestas da padaria", related_name="padarias")
+    cidade = models.CharField(
+        verbose_name="Cidade", max_length=100, null=False, blank=False, help_text="Cidade da padaria")
+    estado = models.CharField(
+        verbose_name="Estado", max_length=2, null=False, blank=False, help_text="Estado da padaria")
 
     def __str__(self):
         return self.nome
-
 
 class Produto(models.Model):
     nome = models.CharField(
@@ -43,20 +44,35 @@ class Cesta(models.Model):
         MEDIO = 'M', 'Médio'
         PREMIUM = 'P', 'Premium'
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome = models.CharField(
         verbose_name="Nome", max_length=100, unique=True, null=False, blank=False, help_text="Nome da cesta")
     descricao = models.TextField(
         verbose_name="Descrição", null=True, blank=True, help_text="Descrição da cesta")
     preco = models.DecimalField(
         verbose_name="Preço", max_digits=10, decimal_places=2, null=False, blank=False, help_text="Preço da cesta")
-    produtos = models.ManyToManyField(
-        Produto, verbose_name="Produtos", help_text="Produtos da cesta", related_name="cestas")
     nivel = models.CharField(
         verbose_name="Nível", max_length=1, choices=Niveis.choices, default=Niveis.BASICO, help_text="Nível da cesta")
 
     def __str__(self):
         return self.nome
+    
+class PadariaCesta(models.Model):
+    padaria = models.ForeignKey(
+        Padaria, on_delete=models.CASCADE, verbose_name="Padaria", null=False, help_text="Padaria da cesta", related_name="padaria_cestas")
+    cesta = models.ForeignKey(
+        Cesta, on_delete=models.CASCADE, verbose_name="Cesta", null=False, help_text="Cesta da padaria", related_name="padaria_cestas")
+
+    def __str__(self):
+        return f"{self.padaria.nome} - {self.cesta.nome}"
+
+class CestaProduto(models.Model):
+    cesta = models.ForeignKey(
+        Cesta, on_delete=models.CASCADE, verbose_name="Cesta", null=False, help_text="Cesta do produto", related_name="cesta_produtos")
+    produto = models.ForeignKey(
+        Produto, on_delete=models.CASCADE, verbose_name="Produto", null=False, help_text="Produto da cesta", related_name="cesta_produtos")
+
+    def __str__(self):
+        return f"{self.cesta.nome} - {self.produto.nome}"   
 
 
 class Endereco(models.Model):
