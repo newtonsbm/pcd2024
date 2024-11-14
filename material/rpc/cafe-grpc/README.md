@@ -18,12 +18,7 @@ Podemos rodar esse comando com Docker e Docker Compose. Considernado que temos o
 docker compose run nome_do_service python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. arquivo_proto.proto
 ```
 
-- No exemplo nosso para gerar o arquivo do serviço de pagamento chamado `payment_service` e o arquivo .proto chamado `payment.proto`
 - No exemplo nosso para gerar o arquivo do serviço de notificação chamado `notification_service` e o arquivo .proto chamado `notification.proto`
-
-```bash
-docker compose run payment_service python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. payment.proto
-``` 
 
 ```bash
 docker compose run notification_service python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. notification.proto
